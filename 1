@@ -1,0 +1,78 @@
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class Main extends JFrame implements ActionListener{
+	String [][] table = {{" _ ", " _ ", " _ "},
+						 {" _ ", " _ ", " _ "},
+						 {" _ ", " _ ", " _ "}};
+
+
+	JTextArea tableArea = new JTextArea("", 10, 10);
+	JPanel panel1 = new JPanel();
+	JLabel label1 = new JLabel("Row, col: ");
+	TextField textFieldRow = new TextField(1);
+	TextField textFieldCol = new TextField(1);
+	JButton enterButton = new JButton("Enter");
+	String player = " X ";
+
+	void drawTable() {
+		tableArea.setText("");
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				tableArea.append(table[i][j]);
+			}
+			tableArea.append("\n");
+		}
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			int row = Integer.valueOf(textFieldRow.getText());
+			int col = Integer.valueOf(textFieldCol.getText());
+			table[row][col] = player;		
+			drawTable();
+		}
+		catch (Exception e1){			
+		}
+
+	}	
+
+	Main(){		
+		setTitle("Tic Tac Toe");
+		setSize(240,320);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		Container c = getContentPane();
+		c.setLayout(new BorderLayout());		
+		c.setForeground(Color.gray);
+
+		label1.setForeground(Color.black);
+		panel1.add(label1);
+		panel1.add(textFieldRow);
+		panel1.add(textFieldCol);
+		panel1.add(enterButton);
+		enterButton.addActionListener(this);
+
+		tableArea.setBackground(Color.black);
+		tableArea.setForeground(Color.blue);
+		tableArea.setFont(new Font("Arial", Font.PLAIN, 64));
+		tableArea.setText("");
+		drawTable();
+		tableArea.setEditable(false);
+
+		c.add(panel1, BorderLayout.NORTH);
+		c.add(tableArea, BorderLayout.CENTER);
+
+		setVisible(true);
+		setLocationRelativeTo(null);// this will center the table
+
+	}
+
+	public static void main(String[] args) {
+		new Main();
+	}
+}
